@@ -38,7 +38,7 @@ export default {
   },
 
   toggle() {
-    console.log('CodebuddyPackage was toggled!');
+    console.log('Fetching code');
     return (
       this.modalPanel.isVisible() ?
       this.modalPanel.hide() :
