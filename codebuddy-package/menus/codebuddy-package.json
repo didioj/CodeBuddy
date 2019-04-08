@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle codebuddy-package",
+        "command": "codebuddy-package:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "codebuddy-package",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "codebuddy-package:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
