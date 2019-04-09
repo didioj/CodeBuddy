@@ -39,11 +39,21 @@ export default {
 
   toggle() {
     console.log('Fetching code');
-    return (
-      this.modalPanel.isVisible() ?
-      this.modalPanel.hide() :
-      this.modalPanel.show()
-    );
+    let editor
+    if (editor = atom.workspace.getActiveTextEditor()) {
+      let selection = editor.getSelectedText() //this is the highlighted string
+      let codeTemplate = this.search(selection)
+      editor.insertText(codeTemplate)
+    }
+    //return (this.modalPanel.isVisible() ? this.modalPanel.hide() : this.modalPanel.show());
+  },
+
+  search(selection) {
+    //this function needs to look up a relevant algorithm and return it
+    //possible method: have a txt file with each algorithm labeled,
+    //then search for the label and return all the text following it until the next label
+    //if the "selection" matches a certain regular expression, then we can search for it
+    return ("REPLACED");
   }
 
 };
