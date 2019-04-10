@@ -1,4 +1,4 @@
-![photo logo](untitled(5).png)  
+![photo logo](logo.png)  
 
 # CodeBuddy
 
