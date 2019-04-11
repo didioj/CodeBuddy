@@ -42,9 +42,12 @@ export default {
     let editor
     if (editor = atom.workspace.getActiveTextEditor()) {
       let selection = editor.getSelectedText() //this is the highlighted string
-      let codeTemplate = this.search(selection)
-      editor.insertText(codeTemplate)
-    }
+      if (selection.length != 0)
+      {
+        let codeTemplate = this.search(selection)
+        editor.insertText(codeTemplate)
+      }
+   }
     //return (this.modalPanel.isVisible() ? this.modalPanel.hide() : this.modalPanel.show());
   },
 
