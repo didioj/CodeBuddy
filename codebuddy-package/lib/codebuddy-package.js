@@ -53,7 +53,25 @@ export default {
     //possible method: have a txt file with each algorithm labeled,
     //then search for the label and return all the text following it until the next label
     //if the "selection" matches a certain regular expression, then we can search for it
-    return ("REPLACED");
+
+    editor = atom.workspace.getActivePaneItem()
+    file = editor.buffer.file
+    filePath = file.path
+
+    //confirming the file in the active pane is a .py
+    if (filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'y')
+    {
+      fileContents = ""
+      const fs = require('fs')
+      fs.readFile('/algos.txt', (err, data) => {
+        if (err) throw err;
+        //console.log(data.toString());
+        fileContents = data.toString();
+      })
+      return fileContents
+    }
+
+    return ("REPLACED")
   }
 
 };
