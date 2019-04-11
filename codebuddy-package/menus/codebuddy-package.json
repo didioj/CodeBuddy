@@ -2,8 +2,8 @@
   "context-menu": {
     "atom-text-editor": [
       {
-        "label": "Toggle codebuddy-package",
-        "command": "codebuddy-package:toggle"
+        "label": "Substitute Code",
+        "command": "codebuddy-package:substitute"
       }
     ]
   },
@@ -15,8 +15,8 @@
           "label": "codebuddy-package",
           "submenu": [
             {
-              "label": "Toggle",
-              "command": "codebuddy-package:toggle"
+              "label": "Substitute Code",
+              "command": "codebuddy-package:substitute"
             }
           ]
         }

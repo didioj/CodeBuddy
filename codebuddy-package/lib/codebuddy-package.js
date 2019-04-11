@@ -21,7 +21,7 @@ export default {
 
     // Register command that toggles this view
     this.subscriptions.add(atom.commands.add('atom-workspace', {
-      'codebuddy-package:toggle': () => this.toggle()
+      'codebuddy-package:substitute': () => this.substitute()
     }));
   },
 
@@ -37,7 +37,7 @@ export default {
     };
   },
 
-  toggle() {
+  substitute() {
     console.log('Fetching code');
     let editor
     if (editor = atom.workspace.getActiveTextEditor()) {
@@ -52,11 +52,13 @@ export default {
   },
 
   search(selection) {
+    var mymap = new Map([["text", "REPLACED"]]);
+    return mymap.get("text");
     //this function needs to look up a relevant algorithm and return it
     //possible method: have a txt file with each algorithm labeled,
     //then search for the label and return all the text following it until the next label
     //if the "selection" matches a certain regular expression, then we can search for it
-    return ("REPLACED");
+    //return ("REPLACED");
   }
 
 };

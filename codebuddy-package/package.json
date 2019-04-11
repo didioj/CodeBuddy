@@ -6,7 +6,7 @@
   "keywords": [
   ],
   "activationCommands": {
-    "atom-workspace": "codebuddy-package:toggle"
+    "atom-workspace": "codebuddy-package:substitute"
   },
   "repository": "https://github.com/atom/codebuddy-package",
   "license": "MIT",
