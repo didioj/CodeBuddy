@@ -43,7 +43,7 @@ export default {
           algorithm = "";
         }
         else{
-          algorithm += lines[i]
+          algorithm = algorithm + lines[i] +'\n'
         }
       }
       if (name !== "")
