@@ -79,10 +79,11 @@ export default {
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
+
       const fs = require('fs')
       var linestart,lineend
       var foundend = false;
-      var fileContents = fs.readFileSync("./lib/algos_cpp.txt", 'utf8');
+      var fileContents = fs.readFileSync(__dirname+"/algos_cpp.txt", 'utf8');
       var lines = fileContents.split('\n'), i,j;
       for(i = 0; i < lines.length; i++){
         console.log("i is at: " + i)
