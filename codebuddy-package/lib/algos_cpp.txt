@@ -1,4 +1,4 @@
-~binarySearch
+~binarysearch
 int binarySearch(int arr[], int l, int r, int x)
 {
     if (r >= l) {
@@ -23,10 +23,7 @@ int binarySearch(int arr[], int l, int r, int x)
     // present in array
     return -1;
 }
-
-//Code from geeksforgeeks.org
-
-~Dijkstra
+~dijkstra
 void dijkstra(int graph[V][V], int src)
 {
      int dist[V];     // The output array.  dist[i] will hold the shortest
@@ -66,4 +63,3 @@ void dijkstra(int graph[V][V], int src)
      // print the constructed distance array
      printSolution(dist, V);
 }
-//Code from geeksforgeeks.org

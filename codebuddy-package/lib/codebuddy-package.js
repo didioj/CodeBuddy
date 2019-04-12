@@ -23,6 +23,35 @@ export default {
     this.subscriptions.add(atom.commands.add('atom-workspace', {
       'codebuddy-package:substitute': () => this.substitute()
     }));
+
+    // Make C++ algorithms map
+
+    cppalgos = new Map();
+    const fs = require('fs')
+    var fileContents = fs.readFileSync(__dirname+"/algos_cpp.txt", 'utf8');
+    var lines = fileContents.split('\n');
+    var algorithm = "";
+    var name = "";
+    for(i = 0; i < lines.length; i++){
+        if(lines[i].charAt(0) === "~"){
+          if (name !== "")
+          {
+            name = name.trim();
+            cppalgos.set(name, algorithm)
+          }
+          name = lines[i].substring(1, lines[i].length)
+          algorithm = "";
+        }
+        else{
+          algorithm += lines[i]
+        }
+      }
+      if (name !== "")
+      {
+        name = name.trim();
+        cppalgos.set(name, algorithm)
+      }
+
   },
 
   deactivate() {
@@ -41,9 +70,10 @@ export default {
     console.log('Fetching code');
     let editor
     if (editor = atom.workspace.getActiveTextEditor()) {
-      let selection = editor.getSelectedText() //this is the highlighted string
+      let selection = editor.getSelectedText(); //this is the highlighted string
       if (selection.length != 0)
       {
+        selection = selection.toLowerCase();
         let codeTemplate = this.search(selection)
         editor.insertText(codeTemplate)
       }
@@ -79,8 +109,8 @@ export default {
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
-
-      const fs = require('fs')
+       return cppalgos.get(selection)
+      /*const fs = require('fs')
       var linestart,lineend
       var foundend = false;
       var fileContents = fs.readFileSync(__dirname+"/algos_cpp.txt", 'utf8');
@@ -111,10 +141,10 @@ export default {
       }
 
       console.log(returnlines)
-      return (returnlines);
+      return (returnlines);*/
     }
 
-    return ("REPLACED")
+    //return ("REPLACED")
   }
 
 };
