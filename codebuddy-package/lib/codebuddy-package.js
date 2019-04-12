@@ -110,41 +110,7 @@ export default {
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
        return cppalgos.get(selection)
-      /*const fs = require('fs')
-      var linestart,lineend
-      var foundend = false;
-      var fileContents = fs.readFileSync(__dirname+"/algos_cpp.txt", 'utf8');
-      var lines = fileContents.split('\n'), i,j;
-      for(i = 0; i < lines.length; i++){
-        console.log("i is at: " + i)
-        if(lines[i].charAt(0) === "~"){
-          if(selection === (lines[i].substring(1,lines[i].length))){
-            linestart = i;
-            console.log("Found a match for " + selection + ", which is " + (lines[i].substring(1,lines[i].length)));
-            console.log("Line starts at: " + linestart);
-            for(j = i + 1; j < lines.length; j++){
-              console.log("j is at: " + j);
-              if(lines[j].charAt(0) === "~"){
-                foundend = true;
-                lineend = j - 1;
-                console.log("Line ends at: " + lineend);
-                break;
-              }
-            }
-          }
-            if(!foundend) lineend = lines.length -1;
-        }
-      }
-      var returnlines = "",m;
-      for(m = linestart + 1; m < lineend; m++){
-        returnlines = returnlines + lines[m] + "\n";
-      }
-
-      console.log(returnlines)
-      return (returnlines);*/
     }
-
-    //return ("REPLACED")
   }
 
 };
