@@ -104,25 +104,13 @@ export default {
             if(!foundend) lineend = lines.length -1;
         }
       }
-
-      // fs.readFile('./lib/algos_cpp.txt', 'utf8', function(err, data){
-      //   if (err) throw err;
-      //   fileContents = data.toString();
-      //   console.log(fileContents);
-      //   // console.log(data.toString());
-      // });
-      // console.log("finished reading file");
-      // console.log(fileContents);
-
       var returnlines = "",m;
       for(m = linestart + 1; m < lineend; m++){
         returnlines = returnlines + lines[m] + "\n";
       }
-      // var output = returnlines.join();
 
       console.log(returnlines)
       return (returnlines);
-      // return ("read all the file successfully!")
     }
 
     return ("REPLACED")
