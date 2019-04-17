@@ -25,32 +25,8 @@ export default {
     }));
 
     // Make C++ algorithms map
-
-    cppalgos = new Map();
-    const fs = require('fs')
-    var fileContents = fs.readFileSync(__dirname+"/algos_cpp.txt", 'utf8');
-    var lines = fileContents.split('\n');
-    var algorithm = "";
-    var name = "";
-    for(i = 0; i < lines.length; i++){
-        if(lines[i].charAt(0) === "~"){
-          if (name !== "")
-          {
-            name = name.trim();
-            cppalgos.set(name, algorithm)
-          }
-          name = lines[i].substring(1, lines[i].length)
-          algorithm = "";
-        }
-        else{
-          algorithm = algorithm + lines[i] +'\n'
-        }
-      }
-      if (name !== "")
-      {
-        name = name.trim();
-        cppalgos.set(name, algorithm)
-      }
+      cppalgos = this.build_map("/algos_cpp.txt")
+    
 
   },
 
@@ -64,6 +40,35 @@ export default {
     return {
       codebuddyPackageViewState: this.codebuddyPackageView.serialize()
     };
+  },
+
+  build_map(fileextension)  {
+    var algos = new Map();
+    const fs = require('fs')
+    var fileContents = fs.readFileSync(__dirname+fileextension, 'utf8');
+    var lines = fileContents.split('\n');
+    var algorithm = "";
+    var name = "";
+    for(i = 0; i < lines.length; i++){
+        if(lines[i].charAt(0) === "~"){
+          if (name !== "")
+          {
+            name = name.trim();
+            algos.set(name, algorithm)
+          }
+          name = lines[i].substring(1, lines[i].length)
+          algorithm = "";
+        }
+        else{
+          algorithm = algorithm + lines[i] +'\n'
+        }
+      }
+      if (name !== "")
+      {
+        name = name.trim();
+        algos.set(name, algorithm)
+      }
+    return algos
   },
 
   substitute() {
