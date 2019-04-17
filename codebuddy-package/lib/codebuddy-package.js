@@ -73,9 +73,12 @@ export default {
       let selection = editor.getSelectedText(); //this is the highlighted string
       if (selection.length != 0)
       {
-        selection = selection.toLowerCase();
+        selection = selection.toLowerCase().trim();
         let codeTemplate = this.search(selection)
-        editor.insertText(codeTemplate)
+        if (codeTemplate !== undefined)
+        {
+          editor.insertText(codeTemplate)
+        }
       }
    }
     //return (this.modalPanel.isVisible() ? this.modalPanel.hide() : this.modalPanel.show());
@@ -109,7 +112,7 @@ export default {
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
-       return cppalgos.get(selection)
+      return cppalgos.get(selection)
     }
   }
 
