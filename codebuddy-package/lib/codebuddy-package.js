@@ -26,8 +26,7 @@ export default {
 
     // Make C++ algorithms map
       cppalgos = this.build_map("/algos_cpp.txt")
-    
-
+      pythonalgos = this.build_map("/algos_py.txt")
   },
 
   deactivate() {
@@ -50,24 +49,27 @@ export default {
     var algorithm = "";
     var name = "";
     for(i = 0; i < lines.length; i++){
-        if(lines[i].charAt(0) === "~"){
-          if (name !== "")
-          {
-            name = name.trim();
-            algos.set(name, algorithm)
-          }
-          name = lines[i].substring(1, lines[i].length)
-          algorithm = "";
-        }
-        else{
-          algorithm = algorithm + lines[i] +'\n'
-        }
-      }
-      if (name !== "")
+      if(lines[i].charAt(0) === "~")
       {
-        name = name.trim();
-        algos.set(name, algorithm)
+        if (name !== "")
+        {
+          name = name.trim();
+          algos.set(name, algorithm)
+        }
+        name = lines[i].substring(1, lines[i].length)
+        algorithm = "";
       }
+      else
+      {
+        algorithm = algorithm + lines[i] +'\n'
+      }
+    }
+
+    if (name !== "")
+    {
+      name = name.trim();
+      algos.set(name, algorithm)
+    }
     return algos
   },
 
@@ -102,17 +104,8 @@ export default {
     //confirming the file in the active pane is a .py
     if (filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'y')
     {
-      // return ("FOUND PY")
-      fileContents = ""
-      const fs = require('fs')
-      fs.readFile('./lib/algos_py.txt', (err, data) => {
-        if (err) throw err;
-        // console.log(data.toString());
-        fileContents = data.toString();
-      });
-      return fileContents;
+      return pythonalgos.get(selection)
     }
-
 
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
