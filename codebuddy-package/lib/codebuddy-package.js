@@ -25,8 +25,9 @@ export default {
     }));
 
     // Make C++ algorithms map
-      cppalgos = this.build_map("/algos_cpp.txt")
-      pythonalgos = this.build_map("/algos_py.txt")
+    cppalgos = this.build_map("/algos_cpp.txt")
+    // Make python algos map
+    pythonalgos = this.build_map("/algos_py.txt")
   },
 
   deactivate() {
@@ -91,6 +92,32 @@ export default {
     //return (this.modalPanel.isVisible() ? this.modalPanel.hide() : this.modalPanel.show());
   },
 
+  matchString(userString, mapString)
+  {
+    //if more than 75% of chars in common, we got a match I'd say
+    matches = 0;
+    for (i = 0; i < userString.length; i++)
+    {
+      for (j = 0; j < mapString.length; j++)
+      {
+        if (userString[i] == mapString[j])
+        {
+          matches++
+        }
+      }
+    }
+
+    if (matches > (mapString.length*.75))
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+
+  },
+
   search(selection) {
     //this function needs to look up a relevant algorithm and return it
     //possible method: have a txt file with each algorithm labeled,
@@ -104,14 +131,27 @@ export default {
     //confirming the file in the active pane is a .py
     if (filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'y')
     {
-      return pythonalgos.get(selection)
+      for (let [k, v] of pythonalgos)
+      {
+        if (this.matchString(selection, k) == true)
+        {
+          return pythonalgos.get(k)
+        }
+      }
     }
 
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
-      return cppalgos.get(selection)
+      for (let [k, v] of cppalgos)
+      {
+        if (this.matchString(selection, k) == true)
+        {
+          return cppalgos.get(k)
+        }
+      }
     }
+
   }
 
 };
