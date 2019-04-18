@@ -1,175 +1,392 @@
-~quicksort
-#FROM GEEKSFORGEEKS
-def partition(arr,low,high):
-    i = ( low-1 )         # index of smaller element
-    pivot = arr[high]     # pivot
-
-    for j in range(low , high):
-
-        # If current element is smaller than or
-        # equal to pivot
-        if   arr[j] <= pivot:
-
-            # increment index of smaller element
-            i = i+1
-            arr[i],arr[j] = arr[j],arr[i]
-
-    arr[i+1],arr[high] = arr[high],arr[i+1]
-    return ( i+1 )
-
-# The main function that implements QuickSort
-# arr[] --> Array to be sorted,
-# low  --> Starting index,
-# high  --> Ending index
-
-# Function to do Quick sort
-def quickSort(arr,low,high):
-    if low < high:
-
-        # pi is partitioning index, arr[p] is now
-        # at right place
-        pi = partition(arr,low,high)
-
-        # Separately sort elements before
-        # partition and after partition
-        quickSort(arr, low, pi-1)
-        quickSort(arr, pi+1, high)
-
-
 ~binarysearch
-#FROM GEEKSFORGEEKS
-# Returns index of x in arr if present, else -1
-def binarySearch (arr, l, r, x):
+"""Pure implementation of binary search algorithm in Python
+    Be careful collection must be sorted, otherwise result will be
+    unpredictable
+    :param sorted_collection: some sorted collection with comparable items
+    :param item: item value to search
+    :return: index of found item or None if item is not found
+    Examples:
+    >>> binary_search([0, 5, 7, 10, 15], 0)
+    0
+    >>> binary_search([0, 5, 7, 10, 15], 15)
+    4
+    >>> binary_search([0, 5, 7, 10, 15], 5)
+    1
+    >>> binary_search([0, 5, 7, 10, 15], 6)
+    """
+def binary_search(sorted_collection, item):
+    left = 0
+    right = len(sorted_collection) - 1
 
-    # Check base case
-    if r >= l:
-
-        mid = l + (r - l)/2
-
-        # If element is present at the middle itself
-        if arr[mid] == x:
-            return mid
-
-        # If element is smaller than mid, then it
-        # can only be present in left subarray
-        elif arr[mid] > x:
-            return binarySearch(arr, l, mid-1, x)
-
-        # Else the element can only be present
-        # in right subarray
+    while left <= right:
+        midpoint = (left + right) // 2
+        current_item = sorted_collection[midpoint]
+        if current_item == item:
+            return midpoint
         else:
-            return binarySearch(arr, mid + 1, r, x)
-
-    else:
-        # Element is not present in the array
-        return -1
-
-
-~bubblesort
-#FROM GEEKS FOR GEEKS
-def bubbleSort(arr):
-    n = len(arr)
-
-    # Traverse through all array elements
-    for i in range(n):
-
-        # Last i elements are already in place
-        for j in range(0, n-i-1):
-
-            # traverse the array from 0 to n-i-1
-            # Swap if the element found is greater
-            # than the next element
-            if arr[j] > arr[j+1] :
-                arr[j], arr[j+1] = arr[j+1], arr[j]
-
-~mergesort
-#FROM GEEKS FOR GEEKS*******
-# Python program for implementation of MergeSort
-def mergeSort(arr):
-    if len(arr) >1:
-        mid = len(arr)//2 #Finding the mid of the array
-        L = arr[:mid] # Dividing the array elements
-        R = arr[mid:] # into 2 halves
-
-        mergeSort(L) # Sorting the first half
-        mergeSort(R) # Sorting the second half
-
-        i = j = k = 0
-
-        # Copy data to temp arrays L[] and R[]
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                arr[k] = L[i]
-                i+=1
+            if item < current_item:
+                right = midpoint - 1
             else:
-                arr[k] = R[j]
-                j+=1
-            k+=1
+                left = midpoint + 1
+    return None
+~quicksort
+def quick_sort(ARRAY):
+    """Pure implementation of quick sort algorithm in Python
+    :param collection: some mutable ordered collection with heterogeneous
+    comparable items inside
+    :return: the same collection ordered by ascending
+    Examples:
+    >>> quick_sort([0, 5, 3, 2, 2])
+    [0, 2, 2, 3, 5]
+    >>> quick_sort([])
+    []
+    >>> quick_sort([-2, -5, -45])
+    [-45, -5, -2]
+    """
+    ARRAY_LENGTH = len(ARRAY)
+    if( ARRAY_LENGTH <= 1):
+        return ARRAY
+    else:
+        PIVOT = ARRAY[0]
+        GREATER = [ element for element in ARRAY[1:] if element > PIVOT ]
+        LESSER = [ element for element in ARRAY[1:] if element <= PIVOT ]
+        return quick_sort(LESSER) + [PIVOT] + quick_sort(GREATER)
+~mergesort
+'''
+Python implementation of merge sort algorithm.
+Takes an average of 0.6 microseconds to sort a list of length 1000 items.
+Best Case Scenario : O(n)
+Worst Case Scenario : O(n)
+'''
+def merge_sort(LIST):
+    start = []
+    end = []
+    while len(LIST) > 1:
+        a = min(LIST)
+        b = max(LIST)
+        start.append(a)
+        end.append(b)
+        LIST.remove(a)
+        LIST.remove(b)
+    if LIST: start.append(LIST[0])
+    end.reverse()
+    return (start + end)
+~findmax
+def find_max(nums):
+    max = nums[0]
+    for x in nums:
+      if x > max:
+        max = x
+    print(max)
+~findmin
+def findMin(x):
+    minNum = x[0]
+    for i in x:
+        if minNum > i:
+            minNum = i
+    return minNum
+~average
+def average(nums):
+    sum = 0
+    n = 0
+    for x in nums:
+      sum += x
+      n += 1
+    avg = sum / n
+    print(avg)
+~fibonacci
+# returns F(n)
+def fibonacci(n: int):  # noqa: E999 This syntax is Python 3 only
+    if n < 0:
+        raise ValueError("Negative arguments are not supported")
+    return _fib(n)[0]
 
-        # Checking if any element was left
-        while i < len(L):
-            arr[k] = L[i]
-            i+=1
-            k+=1
 
-        while j < len(R):
-            arr[k] = R[j]
-            j+=1
-            k+=1
+# returns (F(n), F(n-1))
+def _fib(n: int):  # noqa: E999 This syntax is Python 3 only
+    if n == 0:
+        # (F(0), F(1))
+        return (0, 1)
+    else:
+        # F(2n) = F(n)[2F(n+1) − F(n)]
+        # F(2n+1) = F(n+1)^2+F(n)^2
+        a, b = _fib(n // 2)
+        c = a * (b * 2 - a)
+        d = a * a + b * b
+        if n % 2 == 0:
+            return (c, d)
+        else:
+            return (d, c + d)
+~editdistance
+class EditDistance:
+    """
+    Use :
+    solver              = EditDistance()
+    editDistanceResult  = solver.solve(firstString, secondString)
+    """
 
+    def __init__(self):
+        self.__prepare__()
+
+    def __prepare__(self, N = 0, M = 0):
+        self.dp = [[-1 for y in range(0,M)] for x in range(0,N)]
+
+    def __solveDP(self, x, y):
+        if (x==-1):
+            return y+1
+        elif (y==-1):
+            return x+1
+        elif (self.dp[x][y]>-1):
+            return self.dp[x][y]
+        else:
+            if (self.A[x]==self.B[y]):
+                self.dp[x][y] = self.__solveDP(x-1,y-1)
+            else:
+                self.dp[x][y] = 1+min(self.__solveDP(x,y-1), self.__solveDP(x-1,y), self.__solveDP(x-1,y-1))
+
+            return self.dp[x][y]
+
+    def solve(self, A, B):
+        if isinstance(A,bytes):
+            A = A.decode('ascii')
+
+        if isinstance(B,bytes):
+            B = B.decode('ascii')
+
+        self.A = str(A)
+        self.B = str(B)
+
+        self.__prepare__(len(A), len(B))
+
+        return self.__solveDP(len(A)-1, len(B)-1)
+~longestcommonsubsequence
+def lcs_dp(x, y):
+    # find the length of strings
+    m = len(x)
+    n = len(y)
+
+    # declaring the array for storing the dp values
+    L = [[None] * (n + 1) for i in xrange(m + 1)]
+    seq = []
+
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0 or j == 0:
+                L[i][j] = 0
+            elif x[i - 1] == y[ j - 1]:
+                L[i][j] = L[i - 1][j - 1] + 1
+                seq.append(x[i -1])
+            else:
+                L[i][j] = max(L[i - 1][j], L[i][j - 1])
+    # L[m][n] contains the length of LCS of X[0..n-1] & Y[0..m-1]
+    return L[m][n], seq
+~longestincreasingsubsequence
+def longestSub(ARRAY): 			#This function is recursive
+	
+	ARRAY_LENGTH = len(ARRAY)
+	if(ARRAY_LENGTH <= 1):  	#If the array contains only one element, we return it (it's the stop condition of recursion)
+		return ARRAY
+								#Else
+	PIVOT=ARRAY[0]
+	isFound=False
+	i=1
+	LONGEST_SUB=[]
+	while(not isFound and i<ARRAY_LENGTH):
+		if (ARRAY[i] < PIVOT):
+			isFound=True
+			TEMPORARY_ARRAY = [ element for element in ARRAY[i:] if element >= ARRAY[i] ]
+			TEMPORARY_ARRAY = longestSub(TEMPORARY_ARRAY)
+			if ( len(TEMPORARY_ARRAY) > len(LONGEST_SUB) ):
+				LONGEST_SUB = TEMPORARY_ARRAY
+		else:
+			i+=1
+
+	TEMPORARY_ARRAY = [ element for element in ARRAY[1:] if element >= PIVOT ]
+	TEMPORARY_ARRAY = [PIVOT] + longestSub(TEMPORARY_ARRAY)
+	if ( len(TEMPORARY_ARRAY) > len(LONGEST_SUB) ):
+		return TEMPORARY_ARRAY
+	else:
+		return LONGEST_SUB
+~longestsubarray
+class SubArray:
+
+    def __init__(self, arr):
+        # we need a list not a string, so do something to change the type
+        self.array = arr.split(',')
+        print(("the input array is:", self.array))
+
+    def solve_sub_array(self):
+        rear = [int(self.array[0])]*len(self.array)
+        sum_value = [int(self.array[0])]*len(self.array)
+        for i in range(1, len(self.array)):
+            sum_value[i] = max(int(self.array[i]) + sum_value[i-1], int(self.array[i]))
+            rear[i] = max(sum_value[i], rear[i-1])
+        return rear[len(self.array)-1]
+~primecheck
+import math
+def primeCheck(number):
+    if number % 2 == 0 and number > 2: 
+        return False
+    return all(number % i for i in range(3, int(math.sqrt(number)) + 1, 2))
+~factorial
+# Python program to find the factorial of a number provided by the user.
+
+# change the value for a different result
+num = 10
+
+# uncomment to take input from the user
+#num = int(input("Enter a number: "))
+
+factorial = 1
+
+# check if the number is negative, positive or zero
+if num < 0:
+   print("Sorry, factorial does not exist for negative numbers")
+elif num == 0:
+   print("The factorial of 0 is 1")
+else:
+   for i in range(1,num + 1):
+       factorial = factorial*i
+   print("The factorial of",num,"is",factorial)
+~modularexponential
+def modularExponential(base, power, mod):
+	if power < 0:
+		return -1
+	base %= mod
+	result = 1
+
+	while power > 0:
+		if power & 1:
+			result = (result * base) % mod
+		power = power >> 1
+		base = (base * base) % mod
+	return result
+~linearsearch
+def linear_search(sequence, target):
+    """Pure implementation of linear search algorithm in Python
+    :param sequence: some sorted collection with comparable items
+    :param target: item value to search
+    :return: index of found item or None if item is not found
+    Examples:
+    >>> linear_search([0, 5, 7, 10, 15], 0)
+    0
+    >>> linear_search([0, 5, 7, 10, 15], 15)
+    4
+    >>> linear_search([0, 5, 7, 10, 15], 5)
+    1
+    >>> linear_search([0, 5, 7, 10, 15], 6)
+    """
+    for index, item in enumerate(sequence):
+        if item == target:
+            return index
+    return None
+~interpolationsearch
+def interpolation_search(sorted_collection, item):
+    """Pure implementation of interpolation search algorithm in Python
+    Be careful collection must be sorted, otherwise result will be
+    unpredictable
+    :param sorted_collection: some sorted collection with comparable items
+    :param item: item value to search
+    :return: index of found item or None if item is not found
+    """
+    left = 0
+    right = len(sorted_collection) - 1
+
+    while left <= right:
+        point = left + ((item - sorted_collection[left]) * (right - left)) // (sorted_collection[right] - sorted_collection[left])
+        
+        #out of range check
+        if point<0 or point>=len(sorted_collection):
+            return None
+
+        current_item = sorted_collection[point]
+        if current_item == item:
+            return point
+        else:
+            if item < current_item:
+                right = point - 1
+            else:
+                left = point + 1
+    return None
 ~heapsort
-#FROM GEEKSFORGEEKS
-# To heapify subtree rooted at index i.
-# n is size of heap
-def heapify(arr, n, i):
-    largest = i # Initialize largest as root
-    l = 2 * i + 1     # left = 2*i + 1
-    r = 2 * i + 2     # right = 2*i + 2
+def heapify(unsorted, index, heap_size):
+    largest = index
+    left_index = 2 * index + 1
+    right_index = 2 * index + 2
+    if left_index < heap_size and unsorted[left_index] > unsorted[largest]:
+        largest = left_index
 
-    # See if left child of root exists and is
-    # greater than root
-    if l < n and arr[i] < arr[l]:
-        largest = l
+    if right_index < heap_size and unsorted[right_index] > unsorted[largest]:
+        largest = right_index
 
-    # See if right child of root exists and is
-    # greater than root
-    if r < n and arr[largest] < arr[r]:
-        largest = r
+    if largest != index:
+        unsorted[largest], unsorted[index] = unsorted[index], unsorted[largest]
+        heapify(unsorted, largest, heap_size)
 
-    # Change root, if needed
-    if largest != i:
-        arr[i],arr[largest] = arr[largest],arr[i] # swap
 
-        # Heapify the root.
-        heapify(arr, n, largest)
-
-# The main function to sort an array of given size
-def heapSort(arr):
-    n = len(arr)
-
-    # Build a maxheap.
-    for i in range(n, -1, -1):
-        heapify(arr, n, i)
-
-    # One by one extract elements
-    for i in range(n-1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i] # swap
-        heapify(arr, i, 0)
-
+def heap_sort(unsorted):
+    '''
+    Pure implementation of the heap sort algorithm in Python
+    :param collection: some mutable ordered collection with heterogeneous
+    comparable items inside
+    :return: the same collection ordered by ascending
+    Examples:
+    >>> heap_sort([0, 5, 3, 2, 2])
+    [0, 2, 2, 3, 5]
+    >>> heap_sort([])
+    []
+    >>> heap_sort([-2, -5, -45])
+    [-45, -5, -2]
+    '''
+    n = len(unsorted)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(unsorted, i, n)
+    for i in range(n - 1, 0, -1):
+        unsorted[0], unsorted[i] = unsorted[i], unsorted[0]
+        heapify(unsorted, 0, i)
+    return unsorted
 ~insertionsort
-#FROM GEEKS FOR GEEKS***
-def insertionSort(arr):
+def insertion_sort(collection):
+    """Pure implementation of the insertion sort algorithm in Python
+    :param collection: some mutable ordered collection with heterogeneous
+    comparable items inside
+    :return: the same collection ordered by ascending
+    Examples:
+    >>> insertion_sort([0, 5, 3, 2, 2])
+    [0, 2, 2, 3, 5]
+    >>> insertion_sort([])
+    []
+    >>> insertion_sort([-2, -5, -45])
+    [-45, -5, -2]
+    """
+    for index in range(1, len(collection)):
+        while index > 0 and collection[index - 1] > collection[index]:
+            collection[index], collection[index - 1] = collection[index - 1], collection[index]
+            index -= 1
 
-    # Traverse through 1 to len(arr)
-    for i in range(1, len(arr)):
+    return collection
+~selectionsort
+def selection_sort(collection):
+    """Pure implementation of the selection sort algorithm in Python
+    :param collection: some mutable ordered collection with heterogeneous
+    comparable items inside
+    :return: the same collection ordered by ascending
+    Examples:
+    >>> selection_sort([0, 5, 3, 2, 2])
+    [0, 2, 2, 3, 5]
+    >>> selection_sort([])
+    []
+    >>> selection_sort([-2, -5, -45])
+    [-45, -5, -2]
+    """
 
-        key = arr[i]
-
-        # Move elements of arr[0..i-1], that are
-        # greater than key, to one position ahead
-        # of their current position
-        j = i-1
-        while j >= 0 and key < arr[j] :
-                arr[j + 1] = arr[j]
-                j -= 1
-        arr[j + 1] = key
+    length = len(collection)
+    for i in range(length - 1):
+        least = i
+        for k in range(i + 1, length):
+            if collection[k] < collection[least]:
+                least = k
+        collection[least], collection[i] = (
+            collection[i], collection[least]
+        )
+    return collection
