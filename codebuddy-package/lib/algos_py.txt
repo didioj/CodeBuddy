@@ -390,3 +390,8 @@ def selection_sort(collection):
             collection[i], collection[least]
         )
     return collection
+~fileiterate
+inputfile = open("filepath", 'r')
+for line in inputfile:
+	#do something
+inputfile.close()
