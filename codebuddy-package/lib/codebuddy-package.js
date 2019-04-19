@@ -26,7 +26,7 @@ export default {
 
     // Make C++ algorithms map
     cppAlgos = this.buildMap("/algos_cpp.txt")
-    // Make python algos map
+    // Make python algorithms map
     pythonAlgos = this.buildMap("/algos_py.txt")
   },
 
@@ -42,30 +42,45 @@ export default {
     };
   },
 
-  buildMap(fileextension)  {
+
+  //this function is called in activate to traverse
+  //the list of stored algorithms and put them in a
+  //map for efficient retrieval. fileextension contains
+  //the name of the input file
+  buildMap(fileExtension)  {
+    //this map will hold algorithm names as keys and their bodies
+    //as values
     var algos = new Map();
     const fs = require('fs')
-    var fileContents = fs.readFileSync(__dirname+fileextension, 'utf8');
+    var fileContents = fs.readFileSync(__dirname+fileExtension, 'utf8');
     var lines = fileContents.split('\n');
     var algorithm = "";
     var name = "";
+    //iterate over lines in order to collect one algorithm
+    //at a time and add it to algos
     for(i = 0; i < lines.length; i++){
+      //we've reached the start of a new algorithm
       if(lines[i].charAt(0) === "~")
       {
+        //if name is not empty, we've finished collecting
+        //a previous algorithm, so add it to algos
         if (name !== "")
         {
           name = name.trim();
           algos.set(name, algorithm)
         }
+        //otherwise, initialize name, and get ready to collect
+        //the algorithm
         name = lines[i].substring(1, lines[i].length)
         algorithm = "";
       }
+      //add current line to algorithm 
       else
       {
         algorithm = algorithm + lines[i] +'\n'
       }
     }
-
+    //final pass for adding algorithm
     if (name !== "")
     {
       name = name.trim();
@@ -74,6 +89,8 @@ export default {
     return algos
   },
 
+  //driver function for substituting code, this is what gets
+  //called by the user
   substitute() {
     console.log('Fetching code');
     let editor
@@ -89,13 +106,15 @@ export default {
         }
       }
    }
-    //return (this.modalPanel.isVisible() ? this.modalPanel.hide() : this.modalPanel.show());
   },
 
+  //helper function for determining if two input
+  //strings mostly match
   matchString(userString, mapString)
   {
-    //if more than 75% of chars in common, we got a match I'd say
+    //if more than 75% of chars in common, we have a match
     matches = 0;
+    //iterate over letters of both strings to determine
     for (i = 0; i < userString.length; i++)
     {
       for (j = 0; j < mapString.length; j++)
@@ -107,6 +126,8 @@ export default {
       }
     }
 
+    //check to see if number of characters matching exceeds
+    //75%
     if (matches > (mapString.length*.75))
     {
       return true
@@ -133,6 +154,7 @@ export default {
     {
       for (let [k, v] of pythonAlgos)
       {
+        //call to matchstring
         if (this.matchString(selection, k) == true)
         {
           return pythonAlgos.get(k)
@@ -145,6 +167,7 @@ export default {
     {
       for (let [k, v] of cppAlgos)
       {
+        //call to matchstring
         if (this.matchString(selection, k) == true)
         {
           return cppAlgos.get(k)

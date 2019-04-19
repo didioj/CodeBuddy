@@ -54,7 +54,6 @@ void mergeSort(int arr[], int l, int r){
         merge(arr, l, m, r);
     }
 }
-
 ~quicksort
 int partition (int arr[], int low, int high){
     int pivot = arr[high];    // pivot
@@ -82,7 +81,6 @@ void quickSort(int arr[], int low, int high){
         quickSort(arr, p + 1, high);
     }
 }
-
 ~editdistancerecursive
 int min(int x, int y, int z){
     return min(min(x,y), z);
@@ -109,7 +107,6 @@ int editDist(string str1, string str2, int m, int n) {
                          editDist(str1, str2, m-1, n-1)
                        );
 }
-
 ~editdistancedynamic
 /* A DP based program
  * O(m x n)
@@ -145,7 +142,6 @@ int editDistDP(string str1, string str2, int m, int n) {
 
     return dp[m][n];
 }
-
 ~fibonacci
 int fib(int n){
 	if(arr[n]==-1){
@@ -156,7 +152,6 @@ int fib(int n){
 	}
 	return arr[n];
 }
-
 ~longestcommonsubsequence
 int lcs(string a, string b){
     int m = a.length(), n = b.length();
@@ -192,7 +187,6 @@ int lcs(string a, string b){
     }
     return res[m][n];
 }
-
 ~longestincreasingsubsequence
 int LIS(int a[],int n){
 	int lis[n];
@@ -215,7 +209,6 @@ int LIS(int a[],int n){
 	}
 	return res;
 }
-
 ~binaryconversion
 int number = //value to convert
 int remainder, binary = 0, var = 1;
@@ -226,7 +219,6 @@ int remainder, binary = 0, var = 1;
 		var = var * 10;
 
 } while (number>0);
-
 ~hexadecimalconversion
 int valueToConvert = 0; //Holds user input
 	int hexArray[8];       //Contains hex values backwards
@@ -241,7 +233,6 @@ int valueToConvert = 0; //Holds user input
 		valueToConvert /= 16;
 	}
 hexArray[i] = valueToConvert; //Gets last value
-
 ~isprime
 bool IsPrime( int number )
 {
@@ -253,7 +244,6 @@ bool IsPrime( int number )
  }
   return true;
 }
-
 ~inputstreamtext
 string line;
   ifstream myfile ("example.txt");
@@ -264,7 +254,6 @@ string line;
     myfile.close();
   }
   else cout << "Unable to open file";
-
 ~writetofiletext
 std::ofstream myfile ("example.txt");
   if (myfile.is_open())
