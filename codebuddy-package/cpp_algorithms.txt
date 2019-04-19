@@ -1,0 +1,18 @@
+When wishing to insert an algorithm/code samples into your C++ program, please choose from the below list of
+currently implemented algorithms. If you cannot find the algorithm you are interested in below,
+it might be listed under a different name, or it may not be implemented. Feel free to add it and
+make a pull request if so! Also note that the algorithms below are not listed in any particular order.
+
+binarysearch
+mergesort
+quicksort
+editdistancerecursive
+editdistancedynamic
+fibonacci
+longestcommonsubsequence
+longestincreasingsubsequence
+binaryconversion
+hexadecimalconversion
+isprime
+inputstreamtext
+writetofiletext
