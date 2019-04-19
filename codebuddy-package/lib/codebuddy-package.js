@@ -25,9 +25,9 @@ export default {
     }));
 
     // Make C++ algorithms map
-    cppalgos = this.build_map("/algos_cpp.txt")
+    cppAlgos = this.buildMap("/algos_cpp.txt")
     // Make python algos map
-    pythonalgos = this.build_map("/algos_py.txt")
+    pythonAlgos = this.buildMap("/algos_py.txt")
   },
 
   deactivate() {
@@ -42,7 +42,7 @@ export default {
     };
   },
 
-  build_map(fileextension)  {
+  buildMap(fileextension)  {
     var algos = new Map();
     const fs = require('fs')
     var fileContents = fs.readFileSync(__dirname+fileextension, 'utf8');
@@ -131,11 +131,11 @@ export default {
     //confirming the file in the active pane is a .py
     if (filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'y')
     {
-      for (let [k, v] of pythonalgos)
+      for (let [k, v] of pythonAlgos)
       {
         if (this.matchString(selection, k) == true)
         {
-          return pythonalgos.get(k)
+          return pythonAlgos.get(k)
         }
       }
     }
@@ -143,11 +143,11 @@ export default {
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
-      for (let [k, v] of cppalgos)
+      for (let [k, v] of cppAlgos)
       {
         if (this.matchString(selection, k) == true)
         {
-          return cppalgos.get(k)
+          return cppAlgos.get(k)
         }
       }
     }
