@@ -112,7 +112,7 @@ export default {
   //strings mostly match
   matchString(userString, mapString)
   {
-    //if more than 75% of chars in common, we have a match
+    /*//if more than 75% of chars in common, we have a match
     matches = 0;
     //iterate over letters of both strings to determine
     for (i = 0; i < userString.length; i++)
@@ -135,7 +135,8 @@ export default {
     else
     {
       return false
-    }
+    }*/
+    return userString === mapString;
 
   },
 
