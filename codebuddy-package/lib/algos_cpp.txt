@@ -1,65 +1,276 @@
 ~binarysearch
-int binarySearch(int arr[], int l, int r, int x)
-{
-    if (r >= l) {
-        int mid = l + (r - l) / 2;
+int binary_search(int a[],int l,int r,int key){
+	while(l<=r){
+		int m = l+(r-l)/2;
+		if(key==a[m])
+			return m;
+		else if(key<a[m])
+			r = m-1;
+		else
+			l = m+1;
+	}
+	return -1;
+}
+~mergesort
+void merge(int arr[], int l, int m, int r){
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
+    int L[n1], R[n2];
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1+ j];
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2){
+        if (L[i] <= R[j]){
+            arr[k] = L[i];
+            i++;
+        }else{
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1){
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2){
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
 
-        // If the element is present at the middle
-        // itself
-        if (arr[mid] == x)
-            return mid;
+void mergeSort(int arr[], int l, int r){
+    if (l < r){
+        int m = l+(r-l)/2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+        merge(arr, l, m, r);
+    }
+}
 
-        // If element is smaller than mid, then
-        // it can only be present in left subarray
-        if (arr[mid] > x)
-            return binarySearch(arr, l, mid - 1, x);
+~quicksort
+int partition (int arr[], int low, int high){
+    int pivot = arr[high];    // pivot
+    int i = (low - 1);  // Index of smaller element
+    for (int j = low; j <high; j++){
+        // If current element is smaller than or
+        // equal to pivot
+        if (arr[j] <= pivot){
+            i++;    // increment index of smaller element
+            int temp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=temp;
+        }
+    }
+    int temp=arr[i+1];
+    arr[i+1]=arr[high];
+    arr[high]=temp;
+    return (i + 1);
+}
 
-        // Else the element can only be present
-        // in right subarray
-        return binarySearch(arr, mid + 1, r, x);
+void quickSort(int arr[], int low, int high){
+    if (low < high){
+        int p= partition(arr, low, high);
+        quickSort(arr, low, p - 1);
+        quickSort(arr, p + 1, high);
+    }
+}
+
+~editdistancerecursive
+int min(int x, int y, int z){
+    return min(min(x,y), z);
+}
+/* A Naive recursive C++ program to find
+ * minimum number of operations to convert
+ * str1 to str2.
+ * O(3^m)
+ */
+int editDist(string str1, string str2, int m, int n) {
+        if(m == 0) return n;
+        if(n == 0) return m;
+
+        //If last characters are same then continue
+        //for the rest of them.
+        if(str1[m-1] == str2[n-1])
+            return editDist(str1, str2, m-1, n-1);
+
+        //If last not same, then 3 possibilities
+        //a.Insert b.Remove c. Replace
+        //Get min of three and continue for rest.
+        return 1 + min ( editDist(str1, str2, m, n-1),
+                         editDist(str1, str2, m-1, n),
+                         editDist(str1, str2, m-1, n-1)
+                       );
+}
+
+~editdistancedynamic
+/* A DP based program
+ * O(m x n)
+ */
+int min(int x, int y, int z){
+   return min(min(x,y), z);
+}
+int editDistDP(string str1, string str2, int m, int n) {
+    //Create Table for SubProblems
+    int dp[m+1][n+1];
+
+    //Fill d[][] in bottom up manner
+    for(int i=0; i<=m; i++) {
+        for(int j=0; j<=n; j++) {
+            //If str1 empty. Then add all of str2
+            if(i==0)
+                dp[i][j] = j;
+
+            //If str2 empty. Then add all of str1
+            else if(j==0)
+                dp[i][j] = i;
+
+            //If character same. Recur for remaining
+            else if(str1[i-1] == str2[j-1])
+                dp[i][j] = dp[i-1][j-1];
+
+            else
+                dp[i][j] = 1 + min(dp[i][j-1],//Insert
+                                   dp[i-1][j],//Remove
+                                   dp[i-1][j-1]//Replace);
+        }
     }
 
-    // We reach here when element is not
-    // present in array
-    return -1;
+    return dp[m][n];
 }
-~dijkstra
-void dijkstra(int graph[V][V], int src)
+
+~fibonacci
+int fib(int n){
+	if(arr[n]==-1){
+		if(n<=1)
+			arr[n] = n;
+		else
+			arr[n] = fib(n-1) + fib(n-2);
+	}
+	return arr[n];
+}
+
+~longestcommonsubsequence
+int lcs(string a, string b){
+    int m = a.length(), n = b.length();
+    int res[m+1][n+1];
+    int trace[20][20];
+
+    // fills up the arrays with zeros.
+    for (int i = 0; i < m+1; i++){
+        for (int j = 0; j < n+1; j++){
+            res[i][j] = 0;
+            trace[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < m+1; i++){
+        for (int j = 0; j < n+1; ++j){
+            if(i==0||j==0){
+                res[i][j] = 0;
+                trace[i][j]=0;
+            }
+            else if(a[i-1]==b[j-1]){
+                res[i][j] = 1 + res[i-1][j-1];
+                trace[i][j]=1;			// 1 means trace the matrix in upper left diagonal direction.
+            }else{
+                if (res[i-1][j]>res[i][j-1]){
+                    res[i][j]=res[i-1][j];
+                    trace[i][j]=2;		// 2 means trace the matrix in upwards direction.
+                }else{
+                    res[i][j]=res[i][j-1];
+                    trace[i][j]=3;		//  means trace the matrix in left direction.
+                }
+            }
+        }
+    }
+    return res[m][n];
+}
+
+~longestincreasingsubsequence
+int LIS(int a[],int n){
+	int lis[n];
+	for (int i = 0; i < n; ++i)
+	{
+		lis[i] = 1;
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < i; ++j)
+		{
+			if(a[i]>a[j] && lis[i]<lis[j]+1)
+				lis[i] = lis[j] + 1;
+		}
+	}
+	int res = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		res = max(res,lis[i]);
+	}
+	return res;
+}
+
+~binaryconversion
+int number = //value to convert
+int remainder, binary = 0, var = 1;
+	do {
+		remainder = number % 2;
+		number = number / 2;
+		binary = binary + (remainder*var);
+		var = var * 10;
+
+} while (number>0);
+
+~hexadecimalconversion
+int valueToConvert = 0; //Holds user input
+	int hexArray[8];       //Contains hex values backwards
+	int i = 0;             //counter
+	char HexValues[] = "0123456789ABCDEF";
+
+	cout << "Enter a Decimal Value" << endl; //Displays request to stdout
+	cin >> valueToConvert;					        //Stores value into valueToConvert via user input
+
+	while (valueToConvert > 15){        //Dec to Hex Algorithm
+		hexArray[i++] = valueToConvert % 16;        //Gets remainder
+		valueToConvert /= 16;
+	}
+hexArray[i] = valueToConvert; //Gets last value
+
+~isprime
+bool IsPrime( int number )
 {
-     int dist[V];     // The output array.  dist[i] will hold the shortest
-                      // distance from src to i
-
-     bool sptSet[V]; // sptSet[i] will be true if vertex i is included in shortest
-                     // path tree or shortest distance from src to i is finalized
-
-     // Initialize all distances as INFINITE and stpSet[] as false
-     for (int i = 0; i < V; i++)
-        dist[i] = INT_MAX, sptSet[i] = false;
-
-     // Distance of source vertex from itself is always 0
-     dist[src] = 0;
-
-     // Find shortest path for all vertices
-     for (int count = 0; count < V-1; count++)
-     {
-       // Pick the minimum distance vertex from the set of vertices not
-       // yet processed. u is always equal to src in the first iteration.
-       int u = minDistance(dist, sptSet);
-
-       // Mark the picked vertex as processed
-       sptSet[u] = true;
-
-       // Update dist value of the adjacent vertices of the picked vertex.
-       for (int v = 0; v < V; v++)
-
-         // Update dist[v] only if is not in sptSet, there is an edge from
-         // u to v, and total weight of path from src to  v through u is
-         // smaller than current value of dist[v]
-         if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
-                                       && dist[u]+graph[u][v] < dist[v])
-            dist[v] = dist[u] + graph[u][v];
-     }
-
-     // print the constructed distance array
-     printSolution(dist, V);
+ if ( ( (!(number & 1)) && number != 2 ) || (number < 2) || (number % 3 == 0 && number != 3) )
+   return false;
+   for( int k = 1; 36*k*k-12*k < number;++k){
+   if ( (number % (6*k+1) == 0) || (number % (6*k-1) == 0) )
+       return false;
+ }
+  return true;
 }
+
+~inputstreamtext
+string line;
+  ifstream myfile ("example.txt");
+  if (myfile.is_open()){
+    while ( getline (myfile,line) ){
+      cout << line << '\n';
+    }
+    myfile.close();
+  }
+  else cout << "Unable to open file";
+
+~writetofiletext
+std::ofstream myfile ("example.txt");
+  if (myfile.is_open())
+  {
+    myfile << "This is a line.\n";
+    myfile << "This is another line.\n";
+    myfile.close();
+  }
+  else std::cout << "Unable to open file";
