@@ -74,7 +74,7 @@ export default {
         name = lines[i].substring(1, lines[i].length)
         algorithm = "";
       }
-      //add current line to algorithm 
+      //add current line to algorithm
       else
       {
         algorithm = algorithm + lines[i] +'\n'
@@ -108,36 +108,42 @@ export default {
    }
   },
 
-  //helper function for determining if two input
-  //strings mostly match
-  matchString(userString, mapString)
+  editDistance(s1, s2)
   {
-    /*//if more than 75% of chars in common, we have a match
-    matches = 0;
-    //iterate over letters of both strings to determine
-    for (i = 0; i < userString.length; i++)
+    //make new 2d array
+    d = new Array(s2.length+1);
+    for (i = 0; i < d.length; i++)
     {
-      for (j = 0; j < mapString.length; j++)
+      d[i] = new Array(s1.length+1)
+      for (j = 0; j < s1.length+1; j++)
       {
-        if (userString[i] == mapString[j])
-        {
-          matches++
-        }
+        d[i][j] = 0; //set everything to zero
       }
     }
+    m = s1.length
+    n = s2.length
 
-    //check to see if number of characters matching exceeds
-    //75%
-    if (matches > (mapString.length*.75))
+    //first row and first column simply count up
+    for (let i = 0; i <= m; i ++)
     {
-      return true
+      d[0][i] = i;
     }
-    else
+    for (let j = 0; j <= n; j++)
     {
-      return false
-    }*/
-    return userString === mapString;
+      d[j][0] = j;
+    }
 
+    for (let j = 1; j <= s2.length; j++) {
+      for (let i = 1; i <= s1.length; i++) {
+      if (s1[i - 1] == s2[j - 1])
+        cost = 0
+      else
+        cost = 1
+      //In order: deletion, insertion, substirution
+      d[j][i] = Math.min(d[j][i - 1] + 1, d[j - 1][i] + 1, d[j - 1][i - 1] + cost );
+      }
+    }
+    return d[n][m]
   },
 
   search(selection) {
@@ -153,27 +159,45 @@ export default {
     //confirming the file in the active pane is a .py
     if (filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'y')
     {
-      for (let [k, v] of pythonAlgos)
+      distances = new Map();
+      for (let [k, v] of pythonAlgos) //key is name of algo, v is edit distance
       {
-        //call to matchstring
-        if (this.matchString(selection, k) == true)
+        distances.set(k, this.editDistance(selection, k)) //file up map with edit distances
+      }
+      //then return lowest edit distance
+      lowestDist = 99999
+      lowestName = ""
+      for (let [k, v] of distances) //key is name of algo, v is edit distance
+      {
+        if (distances.get(k) < lowestDist)
         {
-          return pythonAlgos.get(k)
+          lowestDist = distances.get(k)
+          lowestName = k
         }
       }
+      return pythonAlgos.get(lowestName)
     }
 
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
-      for (let [k, v] of cppAlgos)
+      distances = new Map();
+      for (let [k, v] of cppAlgos) //key is name of algo, v is edit distance
       {
-        //call to matchstring
-        if (this.matchString(selection, k) == true)
+        distances.set(k, this.editDistance(selection, k)) //file up map with edit distances
+      }
+      //then return lowest edit distance
+      lowestDist = 99999
+      lowestName = ""
+      for (let [k, v] of distances) //key is name of algo, v is edit distance
+      {
+        if (distances.get(k) < lowestDist)
         {
-          return cppAlgos.get(k)
+          lowestDist = distances.get(k)
+          lowestName = k
         }
       }
+      return cppAlgos.get(lowestName)
     }
 
   }
