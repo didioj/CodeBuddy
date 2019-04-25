@@ -108,6 +108,7 @@ export default {
    }
   },
 
+
   editDistance(s1, s2)
   {
     //make new 2d array
@@ -133,8 +134,8 @@ export default {
       d[j][0] = j;
     }
 
-    for (let j = 1; j <= s2.length; j++) {
-      for (let i = 1; i <= s1.length; i++) {
+    for (let j = 1; j <= n; j++) {
+      for (let i = 1; i <= m; i++) {
       if (s1[i - 1] == s2[j - 1])
         cost = 0
       else
@@ -160,9 +161,9 @@ export default {
     if (filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'y')
     {
       distances = new Map();
-      for (let [k, v] of pythonAlgos) //key is name of algo, v is edit distance
+      for (let [k, v] of pythonAlgos) //key is name of algo, value is edit distance
       {
-        distances.set(k, this.editDistance(selection, k)) //file up map with edit distances
+        distances.set(k, this.editDistance(selection, k)) //fill up map with edit distances
       }
       //then return lowest edit distance
       lowestDist = 99999
@@ -182,9 +183,9 @@ export default {
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
       distances = new Map();
-      for (let [k, v] of cppAlgos) //key is name of algo, v is edit distance
+      for (let [k, v] of cppAlgos) //key is name of algo, val is edit distance
       {
-        distances.set(k, this.editDistance(selection, k)) //file up map with edit distances
+        distances.set(k, this.editDistance(selection, k)) //fill up map with edit distances
       }
       //then return lowest edit distance
       lowestDist = 99999
