@@ -112,7 +112,7 @@ export default {
   editDistance(s1, s2)
   {
     //make new 2d array
-    d = new Array(s2.length+1);
+    var d = new Array(s2.length+1);
     for (i = 0; i < d.length; i++)
     {
       d[i] = new Array(s1.length+1)
@@ -121,8 +121,8 @@ export default {
         d[i][j] = 0; //set everything to zero
       }
     }
-    m = s1.length
-    n = s2.length
+    var m = s1.length
+    var n = s2.length
 
     //first row and first column simply count up
     for (let i = 0; i <= m; i ++)
@@ -133,14 +133,14 @@ export default {
     {
       d[j][0] = j;
     }
-
+    var cost = 0
     for (let j = 1; j <= n; j++) {
       for (let i = 1; i <= m; i++) {
       if (s1[i - 1] == s2[j - 1])
         cost = 0
       else
         cost = 1
-      //In order: deletion, insertion, substirution
+      //In order: deletion, insertion, substitution
       d[j][i] = Math.min(d[j][i - 1] + 1, d[j - 1][i] + 1, d[j - 1][i - 1] + cost );
       }
     }
@@ -149,9 +149,7 @@ export default {
 
   search(selection) {
     //this function needs to look up a relevant algorithm and return it
-    //possible method: have a txt file with each algorithm labeled,
-    //then search for the label and return all the text following it until the next label
-    //if the "selection" matches a certain regular expression, then we can search for it
+    //so search for the label and return all the text following it until the next label
 
     editor = atom.workspace.getActivePaneItem()
     file = editor.buffer.file
@@ -160,19 +158,19 @@ export default {
     //confirming the file in the active pane is a .py
     if (filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'y')
     {
-      distances = new Map();
+      var distances = new Map();
       for (let [k, v] of pythonAlgos) //key is name of algo, value is edit distance
       {
         distances.set(k, this.editDistance(selection, k)) //fill up map with edit distances
       }
       //then return lowest edit distance
-      lowestDist = 99999
-      lowestName = ""
+      var lowestDist = Number.MAX_SAFE_INTEGER
+      var lowestName = ""
       for (let [k, v] of distances) //key is name of algo, v is edit distance
       {
-        if (distances.get(k) < lowestDist)
+        if (v < lowestDist)
         {
-          lowestDist = distances.get(k)
+          lowestDist = v
           lowestName = k
         }
       }
@@ -182,19 +180,19 @@ export default {
     //checking if the file in the active pane is a .cpp
     if (filePath.charAt(filePath.length-3) == 'c' && filePath.charAt(filePath.length-2) == 'p' && filePath.charAt(filePath.length-1) == 'p')
     {
-      distances = new Map();
+      var distances = new Map();
       for (let [k, v] of cppAlgos) //key is name of algo, val is edit distance
       {
         distances.set(k, this.editDistance(selection, k)) //fill up map with edit distances
       }
       //then return lowest edit distance
-      lowestDist = 99999
-      lowestName = ""
+      var lowestDist = Number.MAX_SAFE_INTEGER
+      var lowestName = ""
       for (let [k, v] of distances) //key is name of algo, v is edit distance
       {
-        if (distances.get(k) < lowestDist)
+        if (v < lowestDist)
         {
-          lowestDist = distances.get(k)
+          lowestDist = v
           lowestName = k
         }
       }
